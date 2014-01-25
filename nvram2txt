@@ -1,0 +1,36 @@
+#!/usr/bin/php
+<?php
+	$VERSION="0.1";
+
+	if($argc!=2) {
+		echo "nvram to text v$VERSION conversion utility by Kirils Solojovs\n\n";
+		echo "Usage: {$argv[0]} nvram.bin\n";
+		exit(1);
+	}
+ 
+	$file=$argv[1];
+
+	if(!($nvram_bin=@file_get_contents($file))){
+		file_put_contents('php://stderr', "Could not read $file\n");
+		exit(2);
+	}
+
+	$pos=0;
+	function readnvram($count){
+		global $pos,$nvram_bin; // ugly
+		$pos=$pos+$count;
+		return substr($nvram_bin,$pos-$count,$count);
+	}
+	
+	if(readnvram(6)!=="DD-WRT"){
+		 file_put_contents('php://stderr', "This is not a DD-WRT binary NVRAM backup file\n");
+		 exit(3);
+	}
+	
+  $entrycount=unpack('S',readnvram(2))[1];
+	while($entrycount--){
+		echo readnvram(ord(readnvram(1)));
+		echo 	("=");
+	  echo str_replace("\n",'\n',readnvram(unpack('S',readnvram(2))[1]));
+		echo ("\n");
+	}
