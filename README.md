@@ -1,6 +1,6 @@
 ddwrt-nvram-tool
 ================
-This tools allows converts ddwrt nvram binary files to text for easy readability and comparison
+This tools converts ddwrt nvram binary files to text for easy readability and comparison
 
 <pre>
 Usage example:
