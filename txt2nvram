@@ -1,0 +1,39 @@
+#!/usr/bin/php
+<?php
+	$VERSION="0.03";
+
+	if($argc!=3) {
+		echo "text to nvram v$VERSION conversion utility by Kirils Solojovs\n\n";
+		echo "Usage: {$argv[0]} nvram.txt nvram.bin\n";
+		exit(1);
+	}
+ 
+	$textfile=$argv[1];
+	$writefile=$argv[2];
+
+	if(!($nvram_txt=@file_get_contents($textfile))){
+		file_put_contents('php://stderr', "Could not read $file\n");
+		exit(2);
+	}
+
+  $nvram_bin="";
+	function writenvram($content){
+		global $nvram_bin; // ugly
+		$nvram_bin.=$content;
+	}
+
+	writenvram("DD-WRT");	
+  $nvram_txt_lines=explode("\n",trim($nvram_txt,"\n"));
+  writenvram(pack('S',sizeof($nvram_txt_lines)));
+  
+	foreach($nvram_txt_lines as $one_line){
+		list($var,$val)=explode("=",$one_line,2);
+		$val=str_replace('\n',"\n",$val);
+		writenvram(chr(strlen($var)));
+		writenvram($var);
+		writenvram(pack('S',strlen($val)));
+		writenvram($val);
+	}
+	
+	file_put_contents($writefile,$nvram_bin);
+	

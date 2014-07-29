@@ -8,3 +8,12 @@ Usage example:
 ./nvram2txt second.bin | sort > second.txt
 meld first.txt second.txt
 </pre>
+
+It also allows to convert text files back to ddwrt nvram format after editing
+
+<pre>
+Usage example:
+./nvram2txt nvram.bin > nvram.txt
+nano nvram.txt
+./txt2nvram nvram.txt new.bin
+</pre>
