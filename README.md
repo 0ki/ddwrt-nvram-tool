@@ -19,7 +19,7 @@ nano nvram.txt
 </pre>
 
 <small>
-tl;dr: you brick your device, it's solely your problem
+tl;dr: you brick your device → it's solely your problem
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
